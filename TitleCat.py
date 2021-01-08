@@ -136,7 +136,7 @@ def aboutHelp():
         -t,--timeout            设置超时等待时间(秒)
         -p,--proxy              设置代理服务器（目前仅支持sock5）[127.0.0.1:1080]
         -x,--httpx              指定为http或者https类型，默认为all [http，https,all]
-        -u,useragent            设置UA头，默认为Windows Chrome85
+        -u,--useragent            设置UA头，默认为Windows Chrome85
         -s,-threas              设置同时线程数，默认为15
         -o,--output             设置输出路径（支持.txt与.csv）按输入后缀名进行检查
                                 为空输出到当前目录「时间格式」.txt下                  
