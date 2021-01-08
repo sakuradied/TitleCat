@@ -8,8 +8,11 @@ import sys
 import time
 import socks
 import ssl
+import os
 # https://sakuradied.github.io/
 # 啥都不会就会写bug！
+# 水逆闪退，8哥消亡
+# cat cat cat
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
@@ -24,9 +27,9 @@ def aboutme():
         #####################################################
     ''')
 
+
+
 # 设置全局代理（PySocks）
-
-
 def setPort(ip, port):
     print("代理设置中...")
     socks.set_default_proxy(socks.SOCKS5, str(ip), int(port))
@@ -44,12 +47,18 @@ def testNetwork():
         print(er)
         print("请检查代理是否可用")
 
+
+
 # 读取UrlList内内容
-
-
 def getUrls(httpx, urlDataFile, Timeout, useragent, threas):
+    if os.path.exists(urlDataFile) == True:
+        print('成功读取到文件等待开始中')
+    else:
+        print('文件路径不存在\n程序退出')
+        sys.exit(3)
     w = open(urlDataFile, "r")
     urlData = w.readlines()
+    print('读取到域名共' + str(len(urlData)) + '条')
     threas = int(threas)
     i = 0
     for url in urlData:
@@ -70,6 +79,9 @@ def getUrls(httpx, urlDataFile, Timeout, useragent, threas):
         else:
             time.sleep(int(Timeout)+3)
             i = 0
+
+
+# 大概这就是程序的核心代码了
 def getTitle(Type, urls, Timeout, useragent):
     StartTim = time.time()
     try:
@@ -85,15 +97,34 @@ def getTitle(Type, urls, Timeout, useragent):
         # print(htmlData)
         outputData(url, getTitle, Time)
     except Exception as er:
-        outputERROR(url, er)
-
+        outputError(url, er)
+        pass
 
 def outputData(urlText, titleText, timeoutData):
-    print(urlText, titleText, timeoutData)
+    global outputFile
+    #print(urlText, titleText, timeoutData,outputFile)
+    suffix = os.path.splitext(outputFile)[-1]
+    if suffix == '.csv':
+        print('正在获取' + urlText + '中请稍后...')
+        ouptTxt = open(outputFile, 'a+')
+        Data = '"' + str(urlText) + '","' + str(titleText) + \
+            '","' + str(timeoutData) + '"\n'
+        ouptTxt.write(Data)
+        ouptTxt.close()
+    else:
+        print('正在获取' + urlText + '中请稍后...')
+        ouptTxt = open(outputFile, 'a+')
+        Data = str(urlText) + '  ' + str(titleText) + \
+            '  ' + str(timeoutData) + '\n'
+        ouptTxt.write(Data)
+        ouptTxt.close()
 
 
-def outputERROR(url, errorData):
-    pass
+def outputError(url, errorData):
+    outputErrorFile = open('./TitleCatError.csv','a+')
+    outputErrorData = '"' + str(url) + '","' + str(errorData) + '"\n'
+    outputErrorFile.write(outputErrorData)
+    outputErrorFile.close()
     #print(url, errorData)
 
 
@@ -106,9 +137,9 @@ def aboutHelp():
         -p,--proxy              设置代理服务器（目前仅支持sock5）[127.0.0.1:1080]
         -x,--httpx              指定为http或者https类型，默认为all [http，https,all]
         -u,useragent            设置UA头，默认为Windows Chrome85
-        -s,-threas              设置同时线程数，默认为25
+        -s,-threas              设置同时线程数，默认为15
         -o,--output             设置输出路径（支持.txt与.csv）按输入后缀名进行检查
-                                为空输出到当前目录List.txt下                  
+                                为空输出到当前目录「时间格式」.txt下                  
         ''')
     sys.exit(2)
 
@@ -125,7 +156,7 @@ def about(argv):
         if opt == "-s" or opt == "--threas":
             threas = arg
         else:
-            threas = 20
+            threas = 15
         if opt == "-u" or opt == "--useragent":
             try:
                 useragent = int(arg)
@@ -142,6 +173,7 @@ def about(argv):
                 aboutme()
                 print("参数错误请查看帮助")
                 aboutHelp()
+                sys.exit(3)
         else:
             httpx = 'all'
 
@@ -167,14 +199,19 @@ def about(argv):
                 print("请检查输入的IP地址是否正确，如127.0.0.1:1080")
                 aboutHelp()
         if opt == "-o" or opt == "--output":
-            pass
+            global outputFile
+            outputFile = arg
+        else:
+            fileName = time.strftime("%Y%m%d%H%M", time.localtime())
+            outputFile = './' + str(fileName) + '.txt'
 
     for opt, arg in opts:
         if opt == "-h" or opt == "--help":
             aboutHelp()
 
         if opt == "-f" or opt == "--file":
-            getUrls(httpx, arg, timeout, useragent,threas)
+            getUrls(httpx, arg, timeout, useragent, threas)
+
 
 if __name__ == "__main__":
     aboutme()
