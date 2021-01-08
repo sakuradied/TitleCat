@@ -8,21 +8,20 @@
 
 功能简介： 
 
-	![image.png](https://i.loli.net/2021/01/08/2hJUNspfX7QDkWB.png)
+![image.png](https://i.loli.net/2021/01/08/2hJUNspfX7QDkWB.png)
 基本使用： 
 
-	![image.png](https://i.loli.net/2021/01/08/9Jz8U7FWXvwbsZ1.png)
+![image.png](https://i.loli.net/2021/01/08/9Jz8U7FWXvwbsZ1.png)
 默认txt输出： 
-
-
-	![image.png](https://i.loli.net/2021/01/08/7G43YcbAnRWJdIh.png)
+ 
+![image.png](https://i.loli.net/2021/01/08/7G43YcbAnRWJdIh.png)
 加代理使用： 
-
-	![image.png](https://i.loli.net/2021/01/08/VL4zBXCyOrpdTSo.png)
+ 
+![image.png](https://i.loli.net/2021/01/08/VL4zBXCyOrpdTSo.png)
 使用表格的格式输出： 
-
-	![image.png](https://i.loli.net/2021/01/08/f41dcbrxneJOW6t.png)
-	![image.png](https://i.loli.net/2021/01/08/IxfeZVQcbWXls46.png)
+ 
+![image.png](https://i.loli.net/2021/01/08/f41dcbrxneJOW6t.png)
+![image.png](https://i.loli.net/2021/01/08/IxfeZVQcbWXls46.png)
 
 
 
