@@ -159,7 +159,7 @@ def about(argv):
             threas = 15
         if opt == "-u" or opt == "--useragent":
             try:
-                useragent = int(arg)
+                useragent = str(arg)
             except Exception as er:
                 print("使用-h查看帮助:", er)
                 sys.exit(2)
